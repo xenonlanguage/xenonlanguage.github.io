@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Updates on Xenon</title>
+    <link>http://localhost:1313/updates/</link>
+    <description>Recent content in Updates on Xenon</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 21 Mar 2025 15:10:02 -0400</lastBuildDate>
+    <atom:link href="http://localhost:1313/updates/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Website Created!</title>
+      <link>http://localhost:1313/updates/2025/03-21-website-created/</link>
+      <pubDate>Fri, 21 Mar 2025 15:10:02 -0400</pubDate>
+      <guid>http://localhost:1313/updates/2025/03-21-website-created/</guid>
+      <description>&lt;h2 id=&#34;website-created33&#34;&gt;Website Created!&lt;/h2&gt;&#xA;&lt;p&gt;Xenon now has a website!&lt;/p&gt;&#xA;&lt;p&gt;Expect updates here when something cool happens.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

@@ -1,11 +1,26 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Xenon Language</title>
+    <title>Xenon</title>
     <link>http://localhost:1313/</link>
-    <description>Recent content on Xenon Language</description>
+    <description>Recent content on Xenon</description>
     <generator>Hugo</generator>
-    <language>en-us</language>
+    <language>en</language>
+    <lastBuildDate>Fri, 21 Mar 2025 15:10:02 -0400</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Website Created!</title>
+      <link>http://localhost:1313/updates/2025/03-21-website-created/</link>
+      <pubDate>Fri, 21 Mar 2025 15:10:02 -0400</pubDate>
+      <guid>http://localhost:1313/updates/2025/03-21-website-created/</guid>
+      <description>&lt;h2 id=&#34;website-created33&#34;&gt;Website Created!&lt;/h2&gt;&#xA;&lt;p&gt;Xenon now has a website!&lt;/p&gt;&#xA;&lt;p&gt;Expect updates here when something cool happens.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>About</title>
+      <link>http://localhost:1313/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/about/</guid>
+      <description>&lt;h2 id=&#34;why-xenon&#34;&gt;Why Xenon?&lt;/h2&gt;&#xA;&lt;p&gt;Xenon is a programming language without a compiler at the moment. codegen and lexing are finished but thats about it. So really more.&lt;/p&gt;&#xA;&lt;h2 id=&#34;is-this-really-a-good-way-to-spend-your-time&#34;&gt;Is this really a good way to spend your time&lt;/h2&gt;&#xA;&lt;p&gt;No&lt;/p&gt;&#xA;&lt;h2 id=&#34;will-you-finish-xenon&#34;&gt;Will you finish Xenon&lt;/h2&gt;&#xA;&lt;p&gt;Probably&lt;/p&gt;</description>
+    </item>
   </channel>
 </rss>
