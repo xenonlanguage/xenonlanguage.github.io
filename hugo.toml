@@ -37,3 +37,8 @@ noClasses = true
           identifier = "about"
           name = "About"
           url = "/about"
+
+        [[languages.en.menu.main]]
+          identifier = "docs"
+          name = "Docs"
+          url = "/docs"

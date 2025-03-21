@@ -2,13 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/updates/</loc>
-    <lastmod>2025-03-21T15:10:02-04:00</lastmod>
+    <loc>http://localhost:1313/updates/2025/03-21-documentation-added/</loc>
+    <lastmod>2025-03-21T19:43:52-04:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/updates/2025/03-21-website-created/</loc>
-    <lastmod>2025-03-21T15:10:02-04:00</lastmod>
+    <loc>http://localhost:1313/updates/</loc>
+    <lastmod>2025-03-21T19:43:52-04:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/</loc>
+    <lastmod>2025-03-21T19:43:52-04:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/updates/2025/03-21-website-created/</loc>
     <lastmod>2025-03-21T15:10:02-04:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/about/</loc>
@@ -16,5 +19,9 @@
     <loc>http://localhost:1313/categories/</loc>
   </url><url>
     <loc>http://localhost:1313/tags/</loc>
+  </url><url>
+    <loc>http://localhost:1313/docs/</loc>
+  </url><url>
+    <loc>http://localhost:1313/docs/syntax/</loc>
   </url>
 </urlset>

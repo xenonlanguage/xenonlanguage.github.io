@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  
+    <title>Xenon Syntax :: Xenon</title>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="This page gives a writtin syntax of the xenon programming language in a psudocode form. For a higher level view of the syntax, check out the xenon-codegen crate.
+visibility =&gt; &#39;public&#39; | &#39;private&#39;; name =&gt; (&#39;a&#39;..&#39;z&#39; &#39;A&#39;..&#39;Z&#39; &#39;_&#39;) (&#39;a&#39;..&#39;z&#39; &#39;A&#39;..&#39;Z&#39; &#39;_&#39; &#39;0&#39;..&#39;9&#39;)*; identifier =&gt; name (&#39;.&#39; | &#39;-&gt;&#39; name &#39;(&#39; expression? ( &#39;,&#39; expression)* &#39;)&#39;)*; attribute =&gt; &#39;#[&#39; name (&#39;(&#39; name &#39;)&#39; )? &#39;]&#39;; case =&gt; &#39;case&#39; expression scope; variant =&gt; attribute* name; enum =&gt; attribute* visibility? &#39;enum&#39; name &#39;{&#39; variant? ( &#39;,&#39; variant)* &#39;}&#39;; integer_literal =&gt; (&#39;0&#39;..&#39;9&#39;)&#43;; float_literal =&gt; (&#39;0&#39;..&#39;9&#39;&#43; &#39;.&#39; &#39;0&#39;..&#39;9&#39;&#43;); string_literal =&gt; &#39;&#34;&#39; * &#39;&#34;&#39;; boolean_literal =&gt; &#39;true&#39; | &#39;false&#39;; parentheses =&gt; &#39;(&#39; expression &#39;)&#39;; unary_operation =&gt; ( &#39;-&#39; | &#39;*&#39; | &#39;&amp;&#39; ) expression; binary_operation =&gt; expression &#39;&#43;&#39; | &#39;-&#39; | &#39;*&#39; | &#39;/&#39; | &#39;==&#39; | &#39;&lt;&#39; | &#39;&gt;&#39; | &#39;&lt;=&#39; | &#39;&gt;=&#39; expression; expression =&gt; integer_literal | float_literal | string_literal | boolean_literal | parentheses | unary_operation | binary_operation | identifier; function =&gt; attribute* &#39;async&#39;? visibility? &#39;fn&#39; name &#39;(&#39; argument? ( &#39;,&#39; argument)* &#39;)&#39; (&#39;-&gt;&#39; type)? statement; argument =&gt; name &#39;:&#39; type; if_statement =&gt; &#39;if&#39; &#39;(&#39; expression &#39;)&#39; statement ( &#39;else&#39; statement )?; impl =&gt; attribute* &#39;impliment&#39; ( type &#39;for&#39; )? type &#39;{&#39; function* &#39;}&#39;; loop_statement =&gt; &#39;loop&#39; statement; module_item =&gt; module | struct | function | (visibility? variable_definition) | trait | enum | impl; module =&gt; attribute* visibility? module name &#39;{&#39; module_item* &#39;}&#39; return_statement =&gt; &#39;return&#39; expression?; scope =&gt; &#39;{&#39; statement* &#39;}&#39;; statement =&gt; scope | (variable_definition &#39;;&#39;) | (variable_assignment &#39;;&#39;) | (identifier &#39;;&#39;) /*function_call*/ | if_statement | while_statement | loop_statement | (return_statement &#39;;&#39;) | unsafe | &#39;break;&#39; | &#39;continue;&#39;; struct =&gt; attribute* visibility? &#39;struct&#39; type (&#39;:&#39; type) &#39;{&#39; (visibility? variable_definition) &#39;;&#39; * &#39;}&#39;; switch_statement =&gt; &#39;switch&#39; &#39;(&#39; expression &#39;)&#39; &#39;{&#39; case* &#39;}&#39;; trait =&gt; attribute* visibility? &#39;trait&#39; type &#39;{&#39; (function | (visibility? variable_definition &#39;;&#39;) )* &#39;}&#39;; type =&gt; &#39;*&#39;? identifier (&#39;&lt;&#39; type &#39;&gt;&#39;)?; unsafe =&gt; &#39;unsafe&#39; statement; variable_assignment =&gt; identifier &#39;&#43;=&#39; | &#39;-=&#39; | &#39;*=&#39; | &#39;/=&#39; | &#39;=&#39; expression; variable_definition =&gt; &#39;let&#39; name (&#39;:&#39; type)? (&#39;=&#39; expression)?; while_statement =&gt; &#39;while&#39; &#39;(&#39; expression &#39;)&#39; statement; " />
+<meta name="keywords" content="" />
+
+  <meta name="robots" content="noodp" />
+
+<link rel="canonical" href="http://localhost:1313/docs/syntax/" />
+
+
+
+
+
+  
+  <link rel="stylesheet" href="http://localhost:1313/css/buttons.min.86f6b4c106b6c6eb690ae5203d36b442c1f66f718ff4e8164fa86cf6c61ad641.css">
+
+  
+  <link rel="stylesheet" href="http://localhost:1313/css/code.min.4f0ccc8439f99bf7f7970298556b94011aabc1fcae743b6842fc3361a2da9ea3.css">
+
+  
+  <link rel="stylesheet" href="http://localhost:1313/css/fonts.min.5bb7ed13e1d00d8ff39ea84af26737007eb5051b157b86fc24487c94f3dc8bbe.css">
+
+  
+  <link rel="stylesheet" href="http://localhost:1313/css/footer.min.eb8dfc2c6a7eafa36cd3ba92d63e69e849e2200e0002a228d137f236b09ecd75.css">
+
+  
+  <link rel="stylesheet" href="http://localhost:1313/css/gist.min.a751e8b0abe1ba8bc53ced52a38b19d8950fe78ca29454ea8c2595cf26aad5c0.css">
+
+  
+  <link rel="stylesheet" href="http://localhost:1313/css/header.min.75c7eb0e2872d95ff48109c6647d0223a38db52e2561dd87966eb5fc7c6bdac6.css">
+
+  
+  <link rel="stylesheet" href="http://localhost:1313/css/main.min.15870410d15d02abd22fb5ef00996f65a00d04b3a7435e9f83831c7c2298de88.css">
+
+  
+  <link rel="stylesheet" href="http://localhost:1313/css/menu.min.3c17467ebeb3d38663dce68f71f519901124fa5cbb4519b2fb0667a21e9aca39.css">
+
+  
+  <link rel="stylesheet" href="http://localhost:1313/css/pagination.min.bbb986dbce00a5ce5aca0504b7925fc1c581992a4bf57f163e5d69cc1db7d836.css">
+
+  
+  <link rel="stylesheet" href="http://localhost:1313/css/post.min.e6dddd258e64c83e05cec0cd49c05216742d42fc8ecbfbe6b67083412b609bd3.css">
+
+  
+  <link rel="stylesheet" href="http://localhost:1313/css/syntax.min.a0773cce9310cb6d8ed23e50f005448facf29a53001b57e038828daa466b25c0.css">
+
+  
+  <link rel="stylesheet" href="http://localhost:1313/css/terminal.min.e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css">
+
+  
+  <link rel="stylesheet" href="http://localhost:1313/css/terms.min.b81791663c3790e738e571cdbf802312390d30e4b1d8dc9d814a5b5454d0ac11.css">
+
+
+<link rel="stylesheet" href="http://localhost:1313/terminal.css">
+
+
+
+
+<link rel="shortcut icon" href="http://localhost:1313/favicon.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+
+
+<meta name="twitter:card" content="summary" />
+
+
+
+<meta property="og:locale" content="en" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Xenon Syntax">
+<meta property="og:description" content="This page gives a writtin syntax of the xenon programming language in a psudocode form. For a higher level view of the syntax, check out the xenon-codegen crate.
+visibility =&gt; &#39;public&#39; | &#39;private&#39;; name =&gt; (&#39;a&#39;..&#39;z&#39; &#39;A&#39;..&#39;Z&#39; &#39;_&#39;) (&#39;a&#39;..&#39;z&#39; &#39;A&#39;..&#39;Z&#39; &#39;_&#39; &#39;0&#39;..&#39;9&#39;)*; identifier =&gt; name (&#39;.&#39; | &#39;-&gt;&#39; name &#39;(&#39; expression? ( &#39;,&#39; expression)* &#39;)&#39;)*; attribute =&gt; &#39;#[&#39; name (&#39;(&#39; name &#39;)&#39; )? &#39;]&#39;; case =&gt; &#39;case&#39; expression scope; variant =&gt; attribute* name; enum =&gt; attribute* visibility? &#39;enum&#39; name &#39;{&#39; variant? ( &#39;,&#39; variant)* &#39;}&#39;; integer_literal =&gt; (&#39;0&#39;..&#39;9&#39;)&#43;; float_literal =&gt; (&#39;0&#39;..&#39;9&#39;&#43; &#39;.&#39; &#39;0&#39;..&#39;9&#39;&#43;); string_literal =&gt; &#39;&#34;&#39; * &#39;&#34;&#39;; boolean_literal =&gt; &#39;true&#39; | &#39;false&#39;; parentheses =&gt; &#39;(&#39; expression &#39;)&#39;; unary_operation =&gt; ( &#39;-&#39; | &#39;*&#39; | &#39;&amp;&#39; ) expression; binary_operation =&gt; expression &#39;&#43;&#39; | &#39;-&#39; | &#39;*&#39; | &#39;/&#39; | &#39;==&#39; | &#39;&lt;&#39; | &#39;&gt;&#39; | &#39;&lt;=&#39; | &#39;&gt;=&#39; expression; expression =&gt; integer_literal | float_literal | string_literal | boolean_literal | parentheses | unary_operation | binary_operation | identifier; function =&gt; attribute* &#39;async&#39;? visibility? &#39;fn&#39; name &#39;(&#39; argument? ( &#39;,&#39; argument)* &#39;)&#39; (&#39;-&gt;&#39; type)? statement; argument =&gt; name &#39;:&#39; type; if_statement =&gt; &#39;if&#39; &#39;(&#39; expression &#39;)&#39; statement ( &#39;else&#39; statement )?; impl =&gt; attribute* &#39;impliment&#39; ( type &#39;for&#39; )? type &#39;{&#39; function* &#39;}&#39;; loop_statement =&gt; &#39;loop&#39; statement; module_item =&gt; module | struct | function | (visibility? variable_definition) | trait | enum | impl; module =&gt; attribute* visibility? module name &#39;{&#39; module_item* &#39;}&#39; return_statement =&gt; &#39;return&#39; expression?; scope =&gt; &#39;{&#39; statement* &#39;}&#39;; statement =&gt; scope | (variable_definition &#39;;&#39;) | (variable_assignment &#39;;&#39;) | (identifier &#39;;&#39;) /*function_call*/ | if_statement | while_statement | loop_statement | (return_statement &#39;;&#39;) | unsafe | &#39;break;&#39; | &#39;continue;&#39;; struct =&gt; attribute* visibility? &#39;struct&#39; type (&#39;:&#39; type) &#39;{&#39; (visibility? variable_definition) &#39;;&#39; * &#39;}&#39;; switch_statement =&gt; &#39;switch&#39; &#39;(&#39; expression &#39;)&#39; &#39;{&#39; case* &#39;}&#39;; trait =&gt; attribute* visibility? &#39;trait&#39; type &#39;{&#39; (function | (visibility? variable_definition &#39;;&#39;) )* &#39;}&#39;; type =&gt; &#39;*&#39;? identifier (&#39;&lt;&#39; type &#39;&gt;&#39;)?; unsafe =&gt; &#39;unsafe&#39; statement; variable_assignment =&gt; identifier &#39;&#43;=&#39; | &#39;-=&#39; | &#39;*=&#39; | &#39;/=&#39; | &#39;=&#39; expression; variable_definition =&gt; &#39;let&#39; name (&#39;:&#39; type)? (&#39;=&#39; expression)?; while_statement =&gt; &#39;while&#39; &#39;(&#39; expression &#39;)&#39; statement; " />
+<meta property="og:url" content="http://localhost:1313/docs/syntax/" />
+<meta property="og:site_name" content="Xenon" />
+
+  <meta property="og:image" content="http://localhost:1313/og-image.png">
+
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<body>
+
+
+<div class="container">
+
+  <header class="header">
+  <div class="header__inner">
+    <div class="header__logo">
+      <a href="/">
+  <div class="logo">
+    Xenon
+  </div>
+</a>
+
+    </div>
+    
+      <ul class="menu menu--mobile">
+  <li class="menu__trigger">Menu&nbsp;▾</li>
+  <li>
+    <ul class="menu__dropdown">
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+        
+          <li><a href="/docs">Docs</a></li>
+        
+      
+      
+    </ul>
+  </li>
+</ul>
+
+    
+    
+  </div>
+  
+    <nav class="navigation-menu">
+  <ul class="navigation-menu__inner menu--desktop">
+    
+      
+        
+          <li><a href="/about" >About</a></li>
+        
+      
+        
+          <li><a href="/docs" >Docs</a></li>
+        
+      
+    
+  </ul>
+</nav>
+
+  
+</header>
+
+
+  <div class="content">
+    
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://localhost:1313/docs/syntax/">Xenon Syntax</a>
+  </h1>
+  <div class="post-meta"></div>
+
+  
+  
+
+
+  
+
+  <div class="post-content"><div>
+        <p>This page gives a writtin syntax of the xenon programming language in a psudocode form. For a higher level view of the syntax, check out the <a href="https://crates.io/crates/xenon-codegen">xenon-codegen</a> crate.</p>
+<pre tabindex="0"><code class="language-none" data-lang="none">visibility =&gt; &#39;public&#39; | &#39;private&#39;;
+name =&gt; (&#39;a&#39;..&#39;z&#39; &#39;A&#39;..&#39;Z&#39; &#39;_&#39;) (&#39;a&#39;..&#39;z&#39; &#39;A&#39;..&#39;Z&#39; &#39;_&#39; &#39;0&#39;..&#39;9&#39;)*;
+identifier =&gt; name (&#39;.&#39; | &#39;-&gt;&#39; name &#39;(&#39; expression? ( &#39;,&#39; expression)* &#39;)&#39;)*;
+attribute =&gt; &#39;#[&#39; name (&#39;(&#39; name &#39;)&#39; )? &#39;]&#39;;
+case =&gt; &#39;case&#39; expression scope;
+variant =&gt; attribute* name;
+enum =&gt; attribute* visibility? &#39;enum&#39; name &#39;{&#39; variant? ( &#39;,&#39; variant)* &#39;}&#39;;
+integer_literal =&gt; (&#39;0&#39;..&#39;9&#39;)+;
+float_literal =&gt; (&#39;0&#39;..&#39;9&#39;+ &#39;.&#39; &#39;0&#39;..&#39;9&#39;+);
+string_literal =&gt; &#39;&#34;&#39; * &#39;&#34;&#39;;
+boolean_literal =&gt; &#39;true&#39; | &#39;false&#39;;
+parentheses =&gt; &#39;(&#39; expression &#39;)&#39;;
+unary_operation =&gt; ( &#39;-&#39; | &#39;*&#39; | &#39;&amp;&#39; ) expression;
+binary_operation =&gt;  expression &#39;+&#39; | &#39;-&#39; | &#39;*&#39; | &#39;/&#39; | &#39;==&#39; | &#39;&lt;&#39; | &#39;&gt;&#39; | &#39;&lt;=&#39; | &#39;&gt;=&#39; expression;
+expression =&gt; integer_literal | float_literal | string_literal | boolean_literal | parentheses | unary_operation | binary_operation | identifier;
+function =&gt; attribute* &#39;async&#39;? visibility? &#39;fn&#39; name &#39;(&#39; argument? ( &#39;,&#39; argument)* &#39;)&#39; (&#39;-&gt;&#39; type)? statement;
+argument =&gt; name &#39;:&#39; type;
+if_statement =&gt; &#39;if&#39; &#39;(&#39; expression &#39;)&#39; statement ( &#39;else&#39; statement )?;
+impl =&gt; attribute* &#39;impliment&#39; ( type &#39;for&#39; )? type &#39;{&#39; function* &#39;}&#39;;
+loop_statement =&gt; &#39;loop&#39; statement;
+module_item =&gt; module | struct | function | (visibility? variable_definition) | trait | enum | impl;
+module =&gt; attribute* visibility? module name &#39;{&#39; module_item* &#39;}&#39;
+return_statement =&gt; &#39;return&#39; expression?;
+scope =&gt; &#39;{&#39; statement* &#39;}&#39;;
+statement =&gt; scope | (variable_definition &#39;;&#39;) | (variable_assignment &#39;;&#39;) | (identifier &#39;;&#39;) /*function_call*/ | if_statement | while_statement | loop_statement | (return_statement &#39;;&#39;) | unsafe | &#39;break;&#39; | &#39;continue;&#39;;
+struct =&gt; attribute* visibility? &#39;struct&#39; type (&#39;:&#39; type) &#39;{&#39; (visibility? variable_definition) &#39;;&#39; * &#39;}&#39;;
+switch_statement =&gt; &#39;switch&#39; &#39;(&#39; expression &#39;)&#39; &#39;{&#39; case* &#39;}&#39;;
+trait =&gt; attribute* visibility? &#39;trait&#39; type &#39;{&#39; (function | (visibility? variable_definition &#39;;&#39;) )* &#39;}&#39;;
+type =&gt; &#39;*&#39;? identifier (&#39;&lt;&#39; type &#39;&gt;&#39;)?;
+unsafe =&gt; &#39;unsafe&#39; statement;
+variable_assignment =&gt; identifier &#39;+=&#39; | &#39;-=&#39; | &#39;*=&#39; | &#39;/=&#39; | &#39;=&#39; expression;
+variable_definition =&gt; &#39;let&#39; name (&#39;:&#39; type)? (&#39;=&#39; expression)?;
+while_statement =&gt; &#39;while&#39; &#39;(&#39; expression &#39;)&#39; statement;
+</code></pre>
+      </div></div>
+
+  
+
+  
+    
+
+  
+</article>
+
+  </div>
+
+  
+    <footer class="footer">
+  <div class="footer__inner">
+    
+      <div class="copyright">
+        <span>© 2025 Powered by <a href="https://gohugo.io">Hugo</a></span>
+    
+      <span>:: <a href="https://github.com/panr/hugo-theme-terminal" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+      </div>
+  </div>
+</footer>
+
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+
+
+
+  
+</div>
+
+</body>
+</html>

@@ -1,39 +1,17 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Xenon</title>
-    <link>http://localhost:1313/</link>
-    <description>Recent content on Xenon</description>
+    <title>Docs on Xenon</title>
+    <link>http://localhost:1313/docs/</link>
+    <description>Recent content in Docs on Xenon</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 21 Mar 2025 19:43:52 -0400</lastBuildDate>
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Documentation Added!</title>
-      <link>http://localhost:1313/updates/2025/03-21-documentation-added/</link>
-      <pubDate>Fri, 21 Mar 2025 19:43:52 -0400</pubDate>
-      <guid>http://localhost:1313/updates/2025/03-21-documentation-added/</guid>
-      <description>&lt;p&gt;I have added some documentation of the Xenon syntax to the website under the &lt;em&gt;Docs&lt;/em&gt; link which should be avalible at the top of your screen now! Please reach out to me on discord at the username applepieonrye if you notice any mistakes!&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Website Created!</title>
-      <link>http://localhost:1313/updates/2025/03-21-website-created/</link>
-      <pubDate>Fri, 21 Mar 2025 15:10:02 -0400</pubDate>
-      <guid>http://localhost:1313/updates/2025/03-21-website-created/</guid>
-      <description>&lt;p&gt;Xenon now has a website!&lt;/p&gt;&#xA;&lt;p&gt;Expect updates here when something cool happens.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>About</title>
-      <link>http://localhost:1313/about/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/about/</guid>
-      <description>&lt;h2 id=&#34;why-xenon&#34;&gt;Why Xenon?&lt;/h2&gt;&#xA;&lt;p&gt;Xenon is a programming language without a compiler at the moment. Code generation and lexing are finished, but that&amp;rsquo;s about it.&lt;/p&gt;&#xA;&lt;h2 id=&#34;is-this-really-a-good-way-to-spend-your-time&#34;&gt;Is this really a good way to spend your time&lt;/h2&gt;&#xA;&lt;p&gt;No&lt;/p&gt;&#xA;&lt;h2 id=&#34;will-xenon-be-completed&#34;&gt;Will Xenon be completed?&lt;/h2&gt;&#xA;&lt;p&gt;Probably&lt;/p&gt;&#xA;&lt;h2 id=&#34;where-can-i-find-it&#34;&gt;Where can I find it&lt;/h2&gt;&#xA;&lt;p&gt;Although there is no compiler available for Xenon at the moment, you can find the code generation and lexer on my &lt;a href=&#34;https://github.com/ApplePieCodes&#34;&gt;GitHub Account&lt;/a&gt;. The parser is a work in progress.&lt;/p&gt;</description>
-    </item>
+    <atom:link href="http://localhost:1313/docs/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Xenon Documentation</title>
-      <link>http://localhost:1313/docs/</link>
+      <link>http://localhost:1313/docs/main/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/docs/</guid>
+      <guid>http://localhost:1313/docs/main/</guid>
       <description>&lt;h2 id=&#34;the-documentation-for-the-xenon-programming-language&#34;&gt;The documentation for the Xenon Programming Language&lt;/h2&gt;&#xA;&lt;p&gt;&lt;a href=&#34;http://localhost:1313/docs/syntax/&#34;&gt;Xenon Syntax&lt;/a&gt;&lt;/p&gt;</description>
     </item>
     <item>
