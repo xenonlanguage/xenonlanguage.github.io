@@ -13,3 +13,7 @@ No
 ## Will you finish Xenon
 
 Probably
+
+## Where can I find it
+
+While there is no compiler avalible for Xenon at the moment, you can find the codegen and lexer on my [GitHub Account](https://github.com/ApplePieCodes) (parser is WIP).
