@@ -6,8 +6,15 @@
     <description>Recent content in Updates on Xenon</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 21 Mar 2025 19:43:52 -0400</lastBuildDate>
+    <lastBuildDate>Mon, 24 Mar 2025 07:34:14 -0400</lastBuildDate>
     <atom:link href="http://localhost:1313/updates/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>XVM</title>
+      <link>http://localhost:1313/updates/2025/03-24-xvm/</link>
+      <pubDate>Mon, 24 Mar 2025 07:34:14 -0400</pubDate>
+      <guid>http://localhost:1313/updates/2025/03-24-xvm/</guid>
+      <description>&lt;p&gt;I have begun work on a code generation backend called XVM.&#xA;The IR is basically assembly, but it compiles platform independently.&#xA;XVM will be avalible on crates.io soon.&#xA;Sorry for the delays on new stuff for Xenon.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Documentation Added!</title>
       <link>http://localhost:1313/updates/2025/03-21-documentation-added/</link>
