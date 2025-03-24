@@ -6,8 +6,8 @@
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="This page gives a writtin syntax of the xenon programming language in a psudocode form. For a higher level view of the syntax, check out the xenon-codegen crate.
-visibility =&gt; &#39;public&#39; | &#39;private&#39;; name =&gt; (&#39;a&#39;..&#39;z&#39; &#39;A&#39;..&#39;Z&#39; &#39;_&#39;) (&#39;a&#39;..&#39;z&#39; &#39;A&#39;..&#39;Z&#39; &#39;_&#39; &#39;0&#39;..&#39;9&#39;)*; identifier =&gt; name (&#39;.&#39; | &#39;-&gt;&#39; name &#39;(&#39; expression? ( &#39;,&#39; expression)* &#39;)&#39;)*; attribute =&gt; &#39;#[&#39; name (&#39;(&#39; name &#39;)&#39; )? &#39;]&#39;; case =&gt; &#39;case&#39; expression scope; variant =&gt; attribute* name; enum =&gt; attribute* visibility? &#39;enum&#39; name &#39;{&#39; variant? ( &#39;,&#39; variant)* &#39;}&#39;; integer_literal =&gt; (&#39;0&#39;..&#39;9&#39;)&#43;; float_literal =&gt; (&#39;0&#39;..&#39;9&#39;&#43; &#39;.&#39; &#39;0&#39;..&#39;9&#39;&#43;); string_literal =&gt; &#39;&#34;&#39; * &#39;&#34;&#39;; boolean_literal =&gt; &#39;true&#39; | &#39;false&#39;; parentheses =&gt; &#39;(&#39; expression &#39;)&#39;; unary_operation =&gt; ( &#39;-&#39; | &#39;*&#39; | &#39;&amp;&#39; ) expression; binary_operation =&gt; expression &#39;&#43;&#39; | &#39;-&#39; | &#39;*&#39; | &#39;/&#39; | &#39;==&#39; | &#39;&lt;&#39; | &#39;&gt;&#39; | &#39;&lt;=&#39; | &#39;&gt;=&#39; expression; expression =&gt; integer_literal | float_literal | string_literal | boolean_literal | parentheses | unary_operation | binary_operation | identifier; function =&gt; attribute* &#39;async&#39;? visibility? &#39;fn&#39; name &#39;(&#39; argument? ( &#39;,&#39; argument)* &#39;)&#39; (&#39;-&gt;&#39; type)? statement; argument =&gt; name &#39;:&#39; type; if_statement =&gt; &#39;if&#39; &#39;(&#39; expression &#39;)&#39; statement ( &#39;else&#39; statement )?; impl =&gt; attribute* &#39;impliment&#39; ( type &#39;for&#39; )? type &#39;{&#39; function* &#39;}&#39;; loop_statement =&gt; &#39;loop&#39; statement; module_item =&gt; module | struct | function | (visibility? variable_definition) | trait | enum | impl; module =&gt; attribute* visibility? module name &#39;{&#39; module_item* &#39;}&#39; return_statement =&gt; &#39;return&#39; expression?; scope =&gt; &#39;{&#39; statement* &#39;}&#39;; statement =&gt; scope | (variable_definition &#39;;&#39;) | (variable_assignment &#39;;&#39;) | (identifier &#39;;&#39;) /*function_call*/ | if_statement | while_statement | loop_statement | (return_statement &#39;;&#39;) | unsafe | &#39;break;&#39; | &#39;continue;&#39;; struct =&gt; attribute* visibility? &#39;struct&#39; type (&#39;:&#39; type) &#39;{&#39; (visibility? variable_definition) &#39;;&#39; * &#39;}&#39;; switch_statement =&gt; &#39;switch&#39; &#39;(&#39; expression &#39;)&#39; &#39;{&#39; case* &#39;}&#39;; trait =&gt; attribute* visibility? &#39;trait&#39; type &#39;{&#39; (function | (visibility? variable_definition &#39;;&#39;) )* &#39;}&#39;; type =&gt; &#39;*&#39;? identifier (&#39;&lt;&#39; type &#39;&gt;&#39;)?; unsafe =&gt; &#39;unsafe&#39; statement; variable_assignment =&gt; identifier &#39;&#43;=&#39; | &#39;-=&#39; | &#39;*=&#39; | &#39;/=&#39; | &#39;=&#39; expression; variable_definition =&gt; &#39;let&#39; name (&#39;:&#39; type)? (&#39;=&#39; expression)?; while_statement =&gt; &#39;while&#39; &#39;(&#39; expression &#39;)&#39; statement; " />
+<meta name="description" content="This page gives a writtin syntax of the xenon programming language in Antlr4 form. For a higher level view of the syntax, check out the xenon-codegen crate.
+grammar Xenon; program: top_level_item*; name: (&#39;a..z&#39; | &#39;A..Z&#39;) (&#39;a..z&#39; | &#39;A..Z&#39; | &#39;0..9&#39;)*; identifier: name (&#39;.&#39; name)?; attribute: &#39;#[&#39; identifier ( &#39;(&#39; identifier &#39;)&#39; )? &#39;]&#39;; visibility: &#39;public&#39; | &#39;private&#39;; top_level_item: attribute* (use_statement | module); module: attribute* visibility? &#39;module&#39; &#39;{&#39; module_item &#39;}&#39;; module_item: module | use_statement | function_declaration | struct_declaration | impl_declaration | enum_declaration | trait_declaration; struct_declaration: visibility? &#39;struct&#39; type &#39;{&#39; variable_definition* &#39;}&#39;; impl_declaration: &#39;impl&#39; (type &#39;for&#39;) type &#39;{&#39; function_declaration* &#39;}&#39;; enum_declaration: visibility? &#39;enum&#39; &#39;{&#39; variant* &#39;}&#39;; variant: identifier (&#39;(&#39; type &#39;)&#39;)?; trait_declaration: visibility? &#39;trait&#39; type &#39;{&#39; (variable_definition | function_declaration)* &#39;}&#39;; type: identifier (&#39;&lt;&#39; type &#39;&gt;&#39;)?; use_statement: &#39;use&#39; identifier &#39;;&#39;; function_head: visibility? &#39;async&#39;? identifier; function_declaration: function_head &#39;(&#39; function_arguments? &#39;)&#39; function_type? statement; function_arguments: function_param (&#39;,&#39; function_param)*; function_param: identifier &#39;:&#39; type; function_type: &#39;-&gt;&#39; type; statement: attribute* block | variable_definition | variable_assignment | function_call | if_statement | while_statement | loop_statement | return_statement | unsafe_block | break_statement | continue_statement ; block: &#39;{&#39; statement* &#39;}&#39;; variable_definition: visibility? &#39;let&#39; identifier &#39;=&#39; expression &#39;;&#39;; variable_assignment: identifier &#39;&#43;=&#39; | &#39;-=&#39; | &#39;*=&#39; | &#39;/=&#39; | &#39;=&#39; expression &#39;;&#39;; function_call: identifier &#39;(&#39; expression? (&#39;,&#39; expression)* &#39;)&#39; &#39;;&#39;; if_statement: &#39;if&#39; expression statement (&#39;else&#39; statement)?; while_statement: &#39;while&#39; expression statement; loop_statement: &#39;loop&#39; statement; return_statement: &#39;return&#39; expression? &#39;;&#39;; unsafe_block: &#39;unsafe&#39; block; break_statement: &#39;break&#39; &#39;;&#39;; continue_statement: &#39;continue&#39; &#39;;&#39;; expression: parentheses | literal | unary_operation; parentheses: &#39;(&#39; expression &#39;)&#39;; unary_operation: or_expr |(&#39;&#43;&#39; | &#39;-&#39; | &#39;!&#39; | &#39;&amp;&#39; | &#39;*&#39; expression); cast_expr: unary_operation | cast_expr &#39;as&#39; type; mul_expr: cast_expr | mul_expr &#39;*&#39; cast_expr | mul_expr &#39;/&#39; cast_expr | mul_expr &#39;%&#39; cast_expr; add_expr: mul_expr | add_expr &#39;&#43;&#39; mul_expr | add_expr &#39;-&#39; mul_expr; shift_expr: add_expr | shift_expr &#39;&lt;&lt;&#39; add_expr | shift_expr &#39;&gt;&gt;&#39; add_expr; bit_and_expr: shift_expr | bit_and_expr &#39;&amp;&#39; shift_expr; bit_xor_expr: bit_and_expr | bit_xor_expr &#39;^&#39; bit_and_expr; bit_or_expr: bit_xor_expr | bit_or_expr &#39;|&#39; bit_xor_expr; cmp_expr: bit_or_expr | bit_or_expr (&#39;==&#39; | &#39;!=&#39; | &#39;&lt;&#39; | &#39;&lt;=&#39; | &#39;&gt;&#39; | &#39;&gt;=&#39;) bit_or_expr; and_expr: cmp_expr | and_expr &#39;&amp;&amp;&#39; cmp_expr; or_expr: and_expr | or_expr &#39;||&#39; and_expr; literal: boolean_literal | integer_literal | hex_literal | binary_literal | float_literal | char_literal | string_literal | function_call_expr; boolean_literal: &#39;true&#39; | &#39;false&#39;; integer_literal: &#39;0..9&#39;&#43;; hex_literal: &#39;0x&#39; (&#39;0..9&#39; | &#39;a..f&#39; | &#39;A..F&#39;)&#43;; binary_literal: &#39;0b&#39; (&#39;0&#39; | &#39;1&#39;)&#43;; float_literal: &#39;0..9&#39;&#43; &#39;.&#39; &#39;0..9&#39;&#43;; char_literal: &#39;\&#39;&#39; &#39;.&#39; &#39;\&#39;&#39;; string_literal: &#39;&#34;&#39; &#39;.&#39;* &#39;&#34;&#39;; function_call_expr: identifier &#39;(&#39; expression? (&#39;,&#39; expression)* &#39;)&#39;; " />
 <meta name="keywords" content="" />
 
   <meta name="robots" content="noodp" />
@@ -74,8 +74,8 @@ visibility =&gt; &#39;public&#39; | &#39;private&#39;; name =&gt; (&#39;a&#39;..
 <meta property="og:locale" content="en" />
 <meta property="og:type" content="article" />
 <meta property="og:title" content="Xenon Syntax">
-<meta property="og:description" content="This page gives a writtin syntax of the xenon programming language in a psudocode form. For a higher level view of the syntax, check out the xenon-codegen crate.
-visibility =&gt; &#39;public&#39; | &#39;private&#39;; name =&gt; (&#39;a&#39;..&#39;z&#39; &#39;A&#39;..&#39;Z&#39; &#39;_&#39;) (&#39;a&#39;..&#39;z&#39; &#39;A&#39;..&#39;Z&#39; &#39;_&#39; &#39;0&#39;..&#39;9&#39;)*; identifier =&gt; name (&#39;.&#39; | &#39;-&gt;&#39; name &#39;(&#39; expression? ( &#39;,&#39; expression)* &#39;)&#39;)*; attribute =&gt; &#39;#[&#39; name (&#39;(&#39; name &#39;)&#39; )? &#39;]&#39;; case =&gt; &#39;case&#39; expression scope; variant =&gt; attribute* name; enum =&gt; attribute* visibility? &#39;enum&#39; name &#39;{&#39; variant? ( &#39;,&#39; variant)* &#39;}&#39;; integer_literal =&gt; (&#39;0&#39;..&#39;9&#39;)&#43;; float_literal =&gt; (&#39;0&#39;..&#39;9&#39;&#43; &#39;.&#39; &#39;0&#39;..&#39;9&#39;&#43;); string_literal =&gt; &#39;&#34;&#39; * &#39;&#34;&#39;; boolean_literal =&gt; &#39;true&#39; | &#39;false&#39;; parentheses =&gt; &#39;(&#39; expression &#39;)&#39;; unary_operation =&gt; ( &#39;-&#39; | &#39;*&#39; | &#39;&amp;&#39; ) expression; binary_operation =&gt; expression &#39;&#43;&#39; | &#39;-&#39; | &#39;*&#39; | &#39;/&#39; | &#39;==&#39; | &#39;&lt;&#39; | &#39;&gt;&#39; | &#39;&lt;=&#39; | &#39;&gt;=&#39; expression; expression =&gt; integer_literal | float_literal | string_literal | boolean_literal | parentheses | unary_operation | binary_operation | identifier; function =&gt; attribute* &#39;async&#39;? visibility? &#39;fn&#39; name &#39;(&#39; argument? ( &#39;,&#39; argument)* &#39;)&#39; (&#39;-&gt;&#39; type)? statement; argument =&gt; name &#39;:&#39; type; if_statement =&gt; &#39;if&#39; &#39;(&#39; expression &#39;)&#39; statement ( &#39;else&#39; statement )?; impl =&gt; attribute* &#39;impliment&#39; ( type &#39;for&#39; )? type &#39;{&#39; function* &#39;}&#39;; loop_statement =&gt; &#39;loop&#39; statement; module_item =&gt; module | struct | function | (visibility? variable_definition) | trait | enum | impl; module =&gt; attribute* visibility? module name &#39;{&#39; module_item* &#39;}&#39; return_statement =&gt; &#39;return&#39; expression?; scope =&gt; &#39;{&#39; statement* &#39;}&#39;; statement =&gt; scope | (variable_definition &#39;;&#39;) | (variable_assignment &#39;;&#39;) | (identifier &#39;;&#39;) /*function_call*/ | if_statement | while_statement | loop_statement | (return_statement &#39;;&#39;) | unsafe | &#39;break;&#39; | &#39;continue;&#39;; struct =&gt; attribute* visibility? &#39;struct&#39; type (&#39;:&#39; type) &#39;{&#39; (visibility? variable_definition) &#39;;&#39; * &#39;}&#39;; switch_statement =&gt; &#39;switch&#39; &#39;(&#39; expression &#39;)&#39; &#39;{&#39; case* &#39;}&#39;; trait =&gt; attribute* visibility? &#39;trait&#39; type &#39;{&#39; (function | (visibility? variable_definition &#39;;&#39;) )* &#39;}&#39;; type =&gt; &#39;*&#39;? identifier (&#39;&lt;&#39; type &#39;&gt;&#39;)?; unsafe =&gt; &#39;unsafe&#39; statement; variable_assignment =&gt; identifier &#39;&#43;=&#39; | &#39;-=&#39; | &#39;*=&#39; | &#39;/=&#39; | &#39;=&#39; expression; variable_definition =&gt; &#39;let&#39; name (&#39;:&#39; type)? (&#39;=&#39; expression)?; while_statement =&gt; &#39;while&#39; &#39;(&#39; expression &#39;)&#39; statement; " />
+<meta property="og:description" content="This page gives a writtin syntax of the xenon programming language in Antlr4 form. For a higher level view of the syntax, check out the xenon-codegen crate.
+grammar Xenon; program: top_level_item*; name: (&#39;a..z&#39; | &#39;A..Z&#39;) (&#39;a..z&#39; | &#39;A..Z&#39; | &#39;0..9&#39;)*; identifier: name (&#39;.&#39; name)?; attribute: &#39;#[&#39; identifier ( &#39;(&#39; identifier &#39;)&#39; )? &#39;]&#39;; visibility: &#39;public&#39; | &#39;private&#39;; top_level_item: attribute* (use_statement | module); module: attribute* visibility? &#39;module&#39; &#39;{&#39; module_item &#39;}&#39;; module_item: module | use_statement | function_declaration | struct_declaration | impl_declaration | enum_declaration | trait_declaration; struct_declaration: visibility? &#39;struct&#39; type &#39;{&#39; variable_definition* &#39;}&#39;; impl_declaration: &#39;impl&#39; (type &#39;for&#39;) type &#39;{&#39; function_declaration* &#39;}&#39;; enum_declaration: visibility? &#39;enum&#39; &#39;{&#39; variant* &#39;}&#39;; variant: identifier (&#39;(&#39; type &#39;)&#39;)?; trait_declaration: visibility? &#39;trait&#39; type &#39;{&#39; (variable_definition | function_declaration)* &#39;}&#39;; type: identifier (&#39;&lt;&#39; type &#39;&gt;&#39;)?; use_statement: &#39;use&#39; identifier &#39;;&#39;; function_head: visibility? &#39;async&#39;? identifier; function_declaration: function_head &#39;(&#39; function_arguments? &#39;)&#39; function_type? statement; function_arguments: function_param (&#39;,&#39; function_param)*; function_param: identifier &#39;:&#39; type; function_type: &#39;-&gt;&#39; type; statement: attribute* block | variable_definition | variable_assignment | function_call | if_statement | while_statement | loop_statement | return_statement | unsafe_block | break_statement | continue_statement ; block: &#39;{&#39; statement* &#39;}&#39;; variable_definition: visibility? &#39;let&#39; identifier &#39;=&#39; expression &#39;;&#39;; variable_assignment: identifier &#39;&#43;=&#39; | &#39;-=&#39; | &#39;*=&#39; | &#39;/=&#39; | &#39;=&#39; expression &#39;;&#39;; function_call: identifier &#39;(&#39; expression? (&#39;,&#39; expression)* &#39;)&#39; &#39;;&#39;; if_statement: &#39;if&#39; expression statement (&#39;else&#39; statement)?; while_statement: &#39;while&#39; expression statement; loop_statement: &#39;loop&#39; statement; return_statement: &#39;return&#39; expression? &#39;;&#39;; unsafe_block: &#39;unsafe&#39; block; break_statement: &#39;break&#39; &#39;;&#39;; continue_statement: &#39;continue&#39; &#39;;&#39;; expression: parentheses | literal | unary_operation; parentheses: &#39;(&#39; expression &#39;)&#39;; unary_operation: or_expr |(&#39;&#43;&#39; | &#39;-&#39; | &#39;!&#39; | &#39;&amp;&#39; | &#39;*&#39; expression); cast_expr: unary_operation | cast_expr &#39;as&#39; type; mul_expr: cast_expr | mul_expr &#39;*&#39; cast_expr | mul_expr &#39;/&#39; cast_expr | mul_expr &#39;%&#39; cast_expr; add_expr: mul_expr | add_expr &#39;&#43;&#39; mul_expr | add_expr &#39;-&#39; mul_expr; shift_expr: add_expr | shift_expr &#39;&lt;&lt;&#39; add_expr | shift_expr &#39;&gt;&gt;&#39; add_expr; bit_and_expr: shift_expr | bit_and_expr &#39;&amp;&#39; shift_expr; bit_xor_expr: bit_and_expr | bit_xor_expr &#39;^&#39; bit_and_expr; bit_or_expr: bit_xor_expr | bit_or_expr &#39;|&#39; bit_xor_expr; cmp_expr: bit_or_expr | bit_or_expr (&#39;==&#39; | &#39;!=&#39; | &#39;&lt;&#39; | &#39;&lt;=&#39; | &#39;&gt;&#39; | &#39;&gt;=&#39;) bit_or_expr; and_expr: cmp_expr | and_expr &#39;&amp;&amp;&#39; cmp_expr; or_expr: and_expr | or_expr &#39;||&#39; and_expr; literal: boolean_literal | integer_literal | hex_literal | binary_literal | float_literal | char_literal | string_literal | function_call_expr; boolean_literal: &#39;true&#39; | &#39;false&#39;; integer_literal: &#39;0..9&#39;&#43;; hex_literal: &#39;0x&#39; (&#39;0..9&#39; | &#39;a..f&#39; | &#39;A..F&#39;)&#43;; binary_literal: &#39;0b&#39; (&#39;0&#39; | &#39;1&#39;)&#43;; float_literal: &#39;0..9&#39;&#43; &#39;.&#39; &#39;0..9&#39;&#43;; char_literal: &#39;\&#39;&#39; &#39;.&#39; &#39;\&#39;&#39;; string_literal: &#39;&#34;&#39; &#39;.&#39;* &#39;&#34;&#39;; function_call_expr: identifier &#39;(&#39; expression? (&#39;,&#39; expression)* &#39;)&#39;; " />
 <meta property="og:url" content="http://localhost:1313/docs/syntax/" />
 <meta property="og:site_name" content="Xenon" />
 
@@ -170,40 +170,169 @@ visibility =&gt; &#39;public&#39; | &#39;private&#39;; name =&gt; (&#39;a&#39;..
   
 
   <div class="post-content"><div>
-        <p>This page gives a writtin syntax of the xenon programming language in a psudocode form. For a higher level view of the syntax, check out the <a href="https://crates.io/crates/xenon-codegen">xenon-codegen</a> crate.</p>
-<pre tabindex="0"><code class="language-none" data-lang="none">visibility =&gt; &#39;public&#39; | &#39;private&#39;;
-name =&gt; (&#39;a&#39;..&#39;z&#39; &#39;A&#39;..&#39;Z&#39; &#39;_&#39;) (&#39;a&#39;..&#39;z&#39; &#39;A&#39;..&#39;Z&#39; &#39;_&#39; &#39;0&#39;..&#39;9&#39;)*;
-identifier =&gt; name (&#39;.&#39; | &#39;-&gt;&#39; name &#39;(&#39; expression? ( &#39;,&#39; expression)* &#39;)&#39;)*;
-attribute =&gt; &#39;#[&#39; name (&#39;(&#39; name &#39;)&#39; )? &#39;]&#39;;
-case =&gt; &#39;case&#39; expression scope;
-variant =&gt; attribute* name;
-enum =&gt; attribute* visibility? &#39;enum&#39; name &#39;{&#39; variant? ( &#39;,&#39; variant)* &#39;}&#39;;
-integer_literal =&gt; (&#39;0&#39;..&#39;9&#39;)+;
-float_literal =&gt; (&#39;0&#39;..&#39;9&#39;+ &#39;.&#39; &#39;0&#39;..&#39;9&#39;+);
-string_literal =&gt; &#39;&#34;&#39; * &#39;&#34;&#39;;
-boolean_literal =&gt; &#39;true&#39; | &#39;false&#39;;
-parentheses =&gt; &#39;(&#39; expression &#39;)&#39;;
-unary_operation =&gt; ( &#39;-&#39; | &#39;*&#39; | &#39;&amp;&#39; ) expression;
-binary_operation =&gt;  expression &#39;+&#39; | &#39;-&#39; | &#39;*&#39; | &#39;/&#39; | &#39;==&#39; | &#39;&lt;&#39; | &#39;&gt;&#39; | &#39;&lt;=&#39; | &#39;&gt;=&#39; expression;
-expression =&gt; integer_literal | float_literal | string_literal | boolean_literal | parentheses | unary_operation | binary_operation | identifier;
-function =&gt; attribute* &#39;async&#39;? visibility? &#39;fn&#39; name &#39;(&#39; argument? ( &#39;,&#39; argument)* &#39;)&#39; (&#39;-&gt;&#39; type)? statement;
-argument =&gt; name &#39;:&#39; type;
-if_statement =&gt; &#39;if&#39; &#39;(&#39; expression &#39;)&#39; statement ( &#39;else&#39; statement )?;
-impl =&gt; attribute* &#39;impliment&#39; ( type &#39;for&#39; )? type &#39;{&#39; function* &#39;}&#39;;
-loop_statement =&gt; &#39;loop&#39; statement;
-module_item =&gt; module | struct | function | (visibility? variable_definition) | trait | enum | impl;
-module =&gt; attribute* visibility? module name &#39;{&#39; module_item* &#39;}&#39;
-return_statement =&gt; &#39;return&#39; expression?;
-scope =&gt; &#39;{&#39; statement* &#39;}&#39;;
-statement =&gt; scope | (variable_definition &#39;;&#39;) | (variable_assignment &#39;;&#39;) | (identifier &#39;;&#39;) /*function_call*/ | if_statement | while_statement | loop_statement | (return_statement &#39;;&#39;) | unsafe | &#39;break;&#39; | &#39;continue;&#39;;
-struct =&gt; attribute* visibility? &#39;struct&#39; type (&#39;:&#39; type) &#39;{&#39; (visibility? variable_definition) &#39;;&#39; * &#39;}&#39;;
-switch_statement =&gt; &#39;switch&#39; &#39;(&#39; expression &#39;)&#39; &#39;{&#39; case* &#39;}&#39;;
-trait =&gt; attribute* visibility? &#39;trait&#39; type &#39;{&#39; (function | (visibility? variable_definition &#39;;&#39;) )* &#39;}&#39;;
-type =&gt; &#39;*&#39;? identifier (&#39;&lt;&#39; type &#39;&gt;&#39;)?;
-unsafe =&gt; &#39;unsafe&#39; statement;
-variable_assignment =&gt; identifier &#39;+=&#39; | &#39;-=&#39; | &#39;*=&#39; | &#39;/=&#39; | &#39;=&#39; expression;
-variable_definition =&gt; &#39;let&#39; name (&#39;:&#39; type)? (&#39;=&#39; expression)?;
-while_statement =&gt; &#39;while&#39; &#39;(&#39; expression &#39;)&#39; statement;
+        <p>This page gives a writtin syntax of the xenon programming language in Antlr4 form. For a higher level view of the syntax, check out the <a href="https://crates.io/crates/xenon-codegen">xenon-codegen</a> crate.</p>
+<pre tabindex="0"><code class="language-antlr4" data-lang="antlr4">grammar Xenon;
+
+program:
+ top_level_item*;
+
+name: (&#39;a..z&#39; | &#39;A..Z&#39;) (&#39;a..z&#39; | &#39;A..Z&#39; | &#39;0..9&#39;)*;
+
+identifier: name (&#39;.&#39; name)?;
+
+attribute: &#39;#[&#39; identifier ( &#39;(&#39; identifier &#39;)&#39; )? &#39;]&#39;;
+
+visibility:
+ &#39;public&#39; | &#39;private&#39;;
+
+top_level_item: attribute* (use_statement | module);
+
+module: attribute* visibility? &#39;module&#39; &#39;{&#39; module_item &#39;}&#39;;
+
+module_item:
+ module
+ | use_statement
+ | function_declaration
+ | struct_declaration
+    | impl_declaration
+ | enum_declaration
+ | trait_declaration;
+
+struct_declaration: visibility? &#39;struct&#39; type &#39;{&#39; variable_definition* &#39;}&#39;;
+
+impl_declaration: &#39;impl&#39; (type &#39;for&#39;) type &#39;{&#39; function_declaration* &#39;}&#39;;
+
+enum_declaration: visibility? &#39;enum&#39; &#39;{&#39; variant* &#39;}&#39;;
+
+variant: identifier (&#39;(&#39; type &#39;)&#39;)?;
+
+trait_declaration: visibility? &#39;trait&#39; type &#39;{&#39; (variable_definition | function_declaration)* &#39;}&#39;;
+
+type: identifier (&#39;&lt;&#39; type &#39;&gt;&#39;)?;
+
+use_statement: &#39;use&#39; identifier &#39;;&#39;;
+
+function_head: visibility? &#39;async&#39;? identifier;
+
+function_declaration: function_head &#39;(&#39; function_arguments? &#39;)&#39; function_type? statement;
+
+function_arguments: function_param (&#39;,&#39; function_param)*;
+
+function_param: identifier &#39;:&#39; type;
+
+function_type: &#39;-&gt;&#39; type;
+
+statement: 
+    attribute*
+    block
+    | variable_definition
+    | variable_assignment
+    | function_call
+    | if_statement
+    | while_statement
+    | loop_statement
+    | return_statement
+    | unsafe_block
+    | break_statement
+    | continue_statement
+    ;
+
+block: &#39;{&#39; statement* &#39;}&#39;;
+
+variable_definition: visibility? &#39;let&#39; identifier &#39;=&#39; expression &#39;;&#39;;
+
+variable_assignment: identifier &#39;+=&#39; | &#39;-=&#39; | &#39;*=&#39; | &#39;/=&#39; | &#39;=&#39; expression &#39;;&#39;;
+
+function_call: identifier &#39;(&#39; expression? (&#39;,&#39; expression)* &#39;)&#39; &#39;;&#39;;
+
+if_statement: &#39;if&#39; expression statement (&#39;else&#39; statement)?;
+
+while_statement: &#39;while&#39; expression statement;
+
+loop_statement: &#39;loop&#39; statement;
+
+return_statement: &#39;return&#39; expression? &#39;;&#39;;
+
+unsafe_block: &#39;unsafe&#39; block;
+
+break_statement: &#39;break&#39; &#39;;&#39;;
+
+continue_statement: &#39;continue&#39; &#39;;&#39;;
+
+expression: 
+    parentheses
+    | literal
+    | unary_operation;
+
+parentheses: &#39;(&#39; expression &#39;)&#39;;
+
+unary_operation: 
+    or_expr
+    |(&#39;+&#39; | &#39;-&#39; | &#39;!&#39; | &#39;&amp;&#39; | &#39;*&#39; expression);
+
+cast_expr:
+    unary_operation
+    | cast_expr &#39;as&#39; type;
+
+mul_expr:
+    cast_expr
+    | mul_expr &#39;*&#39; cast_expr
+    | mul_expr &#39;/&#39; cast_expr
+    | mul_expr &#39;%&#39; cast_expr;
+
+add_expr:
+    mul_expr
+    | add_expr &#39;+&#39; mul_expr
+    | add_expr &#39;-&#39; mul_expr;
+
+shift_expr:
+    add_expr
+    | shift_expr &#39;&lt;&lt;&#39; add_expr
+    | shift_expr &#39;&gt;&gt;&#39; add_expr;
+
+bit_and_expr:
+    shift_expr
+    | bit_and_expr &#39;&amp;&#39; shift_expr;
+
+bit_xor_expr:
+    bit_and_expr
+    | bit_xor_expr &#39;^&#39; bit_and_expr;
+
+bit_or_expr:
+    bit_xor_expr
+    | bit_or_expr &#39;|&#39; bit_xor_expr;
+
+cmp_expr:
+    bit_or_expr
+    | bit_or_expr (&#39;==&#39; | &#39;!=&#39; | &#39;&lt;&#39; | &#39;&lt;=&#39; | &#39;&gt;&#39; | &#39;&gt;=&#39;) bit_or_expr;
+
+and_expr:
+    cmp_expr
+    | and_expr &#39;&amp;&amp;&#39; cmp_expr;
+
+or_expr:
+    and_expr
+    | or_expr &#39;||&#39; and_expr;
+
+literal:
+    boolean_literal
+    | integer_literal
+    | hex_literal
+    | binary_literal
+    | float_literal
+    | char_literal
+    | string_literal
+    | function_call_expr;
+
+boolean_literal: &#39;true&#39; | &#39;false&#39;;
+integer_literal: &#39;0..9&#39;+;
+hex_literal: &#39;0x&#39; (&#39;0..9&#39; | &#39;a..f&#39; | &#39;A..F&#39;)+;
+binary_literal: &#39;0b&#39; (&#39;0&#39; | &#39;1&#39;)+;
+float_literal: &#39;0..9&#39;+ &#39;.&#39; &#39;0..9&#39;+;
+char_literal: &#39;\&#39;&#39; &#39;.&#39; &#39;\&#39;&#39;;
+string_literal: &#39;&#34;&#39; &#39;.&#39;* &#39;&#34;&#39;;
+
+function_call_expr: identifier &#39;(&#39; expression? (&#39;,&#39; expression)* &#39;)&#39;;
 </code></pre>
       </div></div>
 
