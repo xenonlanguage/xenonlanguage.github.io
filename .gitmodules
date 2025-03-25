@@ -1,3 +1,6 @@
 [submodule "themes/terminal"]
 	path = themes/terminal
 	url = https://github.com/panr/hugo-theme-terminal.git
+[submodule "dead-simple"]
+	path = themes/dead-simple
+	url = https://github.com/barklan/hugo-dead-simple
