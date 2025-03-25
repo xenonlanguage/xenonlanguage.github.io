@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  
+    <title>Xenon Compilation Process :: Xenon</title>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Xenon is compiled through a 6 step process. Squares represent things within my control.
+L e x i n g P a r s i n g S e m a n t i c s X V M I R A s s e m b l y M a c h i n e C o d e Lexing The code is seperated into Tokens. Tokens store the value, type, and position of segments of text from Xenon code.
+" />
+<meta name="keywords" content="" />
+
+  <meta name="robots" content="noodp" />
+
+<link rel="canonical" href="http://localhost:1313/updates/2025/03-25-xenon-compilation-process/" />
+
+
+
+
+
+  
+  <link rel="stylesheet" href="http://localhost:1313/css/buttons.min.86f6b4c106b6c6eb690ae5203d36b442c1f66f718ff4e8164fa86cf6c61ad641.css">
+
+  
+  <link rel="stylesheet" href="http://localhost:1313/css/code.min.4f0ccc8439f99bf7f7970298556b94011aabc1fcae743b6842fc3361a2da9ea3.css">
+
+  
+  <link rel="stylesheet" href="http://localhost:1313/css/fonts.min.5bb7ed13e1d00d8ff39ea84af26737007eb5051b157b86fc24487c94f3dc8bbe.css">
+
+  
+  <link rel="stylesheet" href="http://localhost:1313/css/footer.min.eb8dfc2c6a7eafa36cd3ba92d63e69e849e2200e0002a228d137f236b09ecd75.css">
+
+  
+  <link rel="stylesheet" href="http://localhost:1313/css/gist.min.a751e8b0abe1ba8bc53ced52a38b19d8950fe78ca29454ea8c2595cf26aad5c0.css">
+
+  
+  <link rel="stylesheet" href="http://localhost:1313/css/header.min.75c7eb0e2872d95ff48109c6647d0223a38db52e2561dd87966eb5fc7c6bdac6.css">
+
+  
+  <link rel="stylesheet" href="http://localhost:1313/css/main.min.15870410d15d02abd22fb5ef00996f65a00d04b3a7435e9f83831c7c2298de88.css">
+
+  
+  <link rel="stylesheet" href="http://localhost:1313/css/menu.min.3c17467ebeb3d38663dce68f71f519901124fa5cbb4519b2fb0667a21e9aca39.css">
+
+  
+  <link rel="stylesheet" href="http://localhost:1313/css/pagination.min.bbb986dbce00a5ce5aca0504b7925fc1c581992a4bf57f163e5d69cc1db7d836.css">
+
+  
+  <link rel="stylesheet" href="http://localhost:1313/css/post.min.e6dddd258e64c83e05cec0cd49c05216742d42fc8ecbfbe6b67083412b609bd3.css">
+
+  
+  <link rel="stylesheet" href="http://localhost:1313/css/syntax.min.a0773cce9310cb6d8ed23e50f005448facf29a53001b57e038828daa466b25c0.css">
+
+  
+  <link rel="stylesheet" href="http://localhost:1313/css/terminal.min.e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css">
+
+  
+  <link rel="stylesheet" href="http://localhost:1313/css/terms.min.b81791663c3790e738e571cdbf802312390d30e4b1d8dc9d814a5b5454d0ac11.css">
+
+
+<link rel="stylesheet" href="http://localhost:1313/terminal.css">
+
+
+
+
+<link rel="shortcut icon" href="http://localhost:1313/favicon.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+
+
+<meta name="twitter:card" content="summary" />
+
+
+
+<meta property="og:locale" content="en" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Xenon Compilation Process">
+<meta property="og:description" content="Xenon is compiled through a 6 step process. Squares represent things within my control.
+L e x i n g P a r s i n g S e m a n t i c s X V M I R A s s e m b l y M a c h i n e C o d e Lexing The code is seperated into Tokens. Tokens store the value, type, and position of segments of text from Xenon code.
+" />
+<meta property="og:url" content="http://localhost:1313/updates/2025/03-25-xenon-compilation-process/" />
+<meta property="og:site_name" content="Xenon" />
+
+  <meta property="og:image" content="http://localhost:1313/og-image.png">
+
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+
+
+  <meta property="article:published_time" content="2025-03-25 07:48:53 -0400 EDT" />
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<body>
+
+
+<div class="container">
+
+  <header class="header">
+  <div class="header__inner">
+    <div class="header__logo">
+      <a href="/">
+  <div class="logo">
+    Xenon
+  </div>
+</a>
+
+    </div>
+    
+      <ul class="menu menu--mobile">
+  <li class="menu__trigger">Menu&nbsp;▾</li>
+  <li>
+    <ul class="menu__dropdown">
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+        
+          <li><a href="/docs">Docs</a></li>
+        
+      
+      
+    </ul>
+  </li>
+</ul>
+
+    
+    
+  </div>
+  
+    <nav class="navigation-menu">
+  <ul class="navigation-menu__inner menu--desktop">
+    
+      
+        
+          <li><a href="/about" >About</a></li>
+        
+      
+        
+          <li><a href="/docs" >Docs</a></li>
+        
+      
+    
+  </ul>
+</nav>
+
+  
+</header>
+
+
+  <div class="content">
+    
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://localhost:1313/updates/2025/03-25-xenon-compilation-process/">Xenon Compilation Process</a>
+  </h1>
+  <div class="post-meta"><time class="post-date">2025-03-25</time></div>
+
+  
+  
+
+
+  
+
+  <div class="post-content"><div>
+        <p>Xenon is compiled through a 6 step process. Squares represent things within my control.</p>
+
+
+
+<div class="goat svg-container ">
+  
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      font-family="Menlo,Lucida Console,monospace"
+      
+        viewBox="0 0 704 57"
+      >
+      <g transform='translate(8,16)'>
+<path d='M 0,0 L 72,0' fill='none' stroke='currentColor'></path>
+<path d='M 104,0 L 184,0' fill='none' stroke='currentColor'></path>
+<path d='M 216,0 L 312,0' fill='none' stroke='currentColor'></path>
+<path d='M 344,0 L 416,0' fill='none' stroke='currentColor'></path>
+<path d='M 464,0 L 520,0' fill='none' stroke='currentColor'></path>
+<path d='M 584,0 L 672,0' fill='none' stroke='currentColor'></path>
+<path d='M 72,16 L 96,16' fill='none' stroke='currentColor'></path>
+<path d='M 184,16 L 208,16' fill='none' stroke='currentColor'></path>
+<path d='M 312,16 L 336,16' fill='none' stroke='currentColor'></path>
+<path d='M 416,16 L 440,16' fill='none' stroke='currentColor'></path>
+<path d='M 536,16 L 560,16' fill='none' stroke='currentColor'></path>
+<path d='M 0,32 L 72,32' fill='none' stroke='currentColor'></path>
+<path d='M 104,32 L 184,32' fill='none' stroke='currentColor'></path>
+<path d='M 216,32 L 312,32' fill='none' stroke='currentColor'></path>
+<path d='M 344,32 L 416,32' fill='none' stroke='currentColor'></path>
+<path d='M 464,32 L 520,32' fill='none' stroke='currentColor'></path>
+<path d='M 584,32 L 672,32' fill='none' stroke='currentColor'></path>
+<path d='M 0,0 L 0,32' fill='none' stroke='currentColor'></path>
+<path d='M 72,0 L 72,16' fill='none' stroke='currentColor'></path>
+<path d='M 72,16 L 72,32' fill='none' stroke='currentColor'></path>
+<path d='M 104,0 L 104,32' fill='none' stroke='currentColor'></path>
+<path d='M 184,0 L 184,16' fill='none' stroke='currentColor'></path>
+<path d='M 184,16 L 184,32' fill='none' stroke='currentColor'></path>
+<path d='M 216,0 L 216,32' fill='none' stroke='currentColor'></path>
+<path d='M 312,0 L 312,16' fill='none' stroke='currentColor'></path>
+<path d='M 312,16 L 312,32' fill='none' stroke='currentColor'></path>
+<path d='M 344,0 L 344,32' fill='none' stroke='currentColor'></path>
+<path d='M 416,0 L 416,16' fill='none' stroke='currentColor'></path>
+<path d='M 416,16 L 416,32' fill='none' stroke='currentColor'></path>
+<polygon points='104.000000,16.000000 92.000000,10.400000 92.000000,21.600000' fill='currentColor' transform='rotate(0.000000, 96.000000, 16.000000)'></polygon>
+<polygon points='216.000000,16.000000 204.000000,10.400000 204.000000,21.600000' fill='currentColor' transform='rotate(0.000000, 208.000000, 16.000000)'></polygon>
+<polygon points='344.000000,16.000000 332.000000,10.400000 332.000000,21.600000' fill='currentColor' transform='rotate(0.000000, 336.000000, 16.000000)'></polygon>
+<polygon points='448.000000,16.000000 436.000000,10.400000 436.000000,21.600000' fill='currentColor' transform='rotate(0.000000, 440.000000, 16.000000)'></polygon>
+<polygon points='568.000000,16.000000 556.000000,10.400000 556.000000,21.600000' fill='currentColor' transform='rotate(0.000000, 560.000000, 16.000000)'></polygon>
+<path d='M 464,0 A 16,16 0 0,0 448,16' fill='none' stroke='currentColor'></path>
+<path d='M 520,0 A 16,16 0 0,1 536,16' fill='none' stroke='currentColor'></path>
+<path d='M 584,0 A 16,16 0 0,0 568,16' fill='none' stroke='currentColor'></path>
+<path d='M 672,0 A 16,16 0 0,1 688,16' fill='none' stroke='currentColor'></path>
+<path d='M 448,16 A 16,16 0 0,0 464,32' fill='none' stroke='currentColor'></path>
+<path d='M 536,16 A 16,16 0 0,1 520,32' fill='none' stroke='currentColor'></path>
+<path d='M 568,16 A 16,16 0 0,0 584,32' fill='none' stroke='currentColor'></path>
+<path d='M 688,16 A 16,16 0 0,1 672,32' fill='none' stroke='currentColor'></path>
+<text text-anchor='middle' x='16' y='20' fill='currentColor' style='font-size:1em'>L</text>
+<text text-anchor='middle' x='24' y='20' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='32' y='20' fill='currentColor' style='font-size:1em'>x</text>
+<text text-anchor='middle' x='40' y='20' fill='currentColor' style='font-size:1em'>i</text>
+<text text-anchor='middle' x='48' y='20' fill='currentColor' style='font-size:1em'>n</text>
+<text text-anchor='middle' x='56' y='20' fill='currentColor' style='font-size:1em'>g</text>
+<text text-anchor='middle' x='120' y='20' fill='currentColor' style='font-size:1em'>P</text>
+<text text-anchor='middle' x='128' y='20' fill='currentColor' style='font-size:1em'>a</text>
+<text text-anchor='middle' x='136' y='20' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='144' y='20' fill='currentColor' style='font-size:1em'>s</text>
+<text text-anchor='middle' x='152' y='20' fill='currentColor' style='font-size:1em'>i</text>
+<text text-anchor='middle' x='160' y='20' fill='currentColor' style='font-size:1em'>n</text>
+<text text-anchor='middle' x='168' y='20' fill='currentColor' style='font-size:1em'>g</text>
+<text text-anchor='middle' x='232' y='20' fill='currentColor' style='font-size:1em'>S</text>
+<text text-anchor='middle' x='240' y='20' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='248' y='20' fill='currentColor' style='font-size:1em'>m</text>
+<text text-anchor='middle' x='256' y='20' fill='currentColor' style='font-size:1em'>a</text>
+<text text-anchor='middle' x='264' y='20' fill='currentColor' style='font-size:1em'>n</text>
+<text text-anchor='middle' x='272' y='20' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='280' y='20' fill='currentColor' style='font-size:1em'>i</text>
+<text text-anchor='middle' x='288' y='20' fill='currentColor' style='font-size:1em'>c</text>
+<text text-anchor='middle' x='296' y='20' fill='currentColor' style='font-size:1em'>s</text>
+<text text-anchor='middle' x='360' y='20' fill='currentColor' style='font-size:1em'>X</text>
+<text text-anchor='middle' x='368' y='20' fill='currentColor' style='font-size:1em'>V</text>
+<text text-anchor='middle' x='376' y='20' fill='currentColor' style='font-size:1em'>M</text>
+<text text-anchor='middle' x='392' y='20' fill='currentColor' style='font-size:1em'>I</text>
+<text text-anchor='middle' x='400' y='20' fill='currentColor' style='font-size:1em'>R</text>
+<text text-anchor='middle' x='464' y='20' fill='currentColor' style='font-size:1em'>A</text>
+<text text-anchor='middle' x='472' y='20' fill='currentColor' style='font-size:1em'>s</text>
+<text text-anchor='middle' x='480' y='20' fill='currentColor' style='font-size:1em'>s</text>
+<text text-anchor='middle' x='488' y='20' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='496' y='20' fill='currentColor' style='font-size:1em'>m</text>
+<text text-anchor='middle' x='504' y='20' fill='currentColor' style='font-size:1em'>b</text>
+<text text-anchor='middle' x='512' y='20' fill='currentColor' style='font-size:1em'>l</text>
+<text text-anchor='middle' x='520' y='20' fill='currentColor' style='font-size:1em'>y</text>
+<text text-anchor='middle' x='584' y='20' fill='currentColor' style='font-size:1em'>M</text>
+<text text-anchor='middle' x='592' y='20' fill='currentColor' style='font-size:1em'>a</text>
+<text text-anchor='middle' x='600' y='20' fill='currentColor' style='font-size:1em'>c</text>
+<text text-anchor='middle' x='608' y='20' fill='currentColor' style='font-size:1em'>h</text>
+<text text-anchor='middle' x='616' y='20' fill='currentColor' style='font-size:1em'>i</text>
+<text text-anchor='middle' x='624' y='20' fill='currentColor' style='font-size:1em'>n</text>
+<text text-anchor='middle' x='632' y='20' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='648' y='20' fill='currentColor' style='font-size:1em'>C</text>
+<text text-anchor='middle' x='656' y='20' fill='currentColor' style='font-size:1em'>o</text>
+<text text-anchor='middle' x='664' y='20' fill='currentColor' style='font-size:1em'>d</text>
+<text text-anchor='middle' x='672' y='20' fill='currentColor' style='font-size:1em'>e</text>
+</g>
+
+    </svg>
+  
+</div>
+<h2 id="lexing">Lexing<a href="#lexing" class="hanchor" ariaLabel="Anchor">#</a> </h2>
+<p>The code is seperated into <a href="/docs/tokens">Tokens</a>. Tokens store the value, type, and position of segments of text from Xenon code.</p>
+<h2 id="parsing">Parsing<a href="#parsing" class="hanchor" ariaLabel="Anchor">#</a> </h2>
+<p>The tokens are matched with patterns defined in the xenon <a href="/docs/syntax/">Syntax</a>. These high level structures are the first IR (Intermediate Representation)</p>
+<h2 id="semantics">Semantics<a href="#semantics" class="hanchor" ariaLabel="Anchor">#</a> </h2>
+<p>This section reviews your code to ensure that</p>
+
+      </div></div>
+
+  
+    
+<div class="pagination">
+  <div class="pagination__title">
+    <span class="pagination__title-h">Read other posts</span>
+    <hr />
+  </div>
+  <div class="pagination__buttons">
+    
+    
+    
+      <a href="http://localhost:1313/updates/2025/03-25-codegen-update-expected/" class="button inline next">
+         [<span class="button__text">Codegen Update Expected</span>] &gt;
+      </a>
+    
+  </div>
+</div>
+
+
+  
+
+  
+    
+
+  
+</article>
+
+  </div>
+
+  
+    <footer class="footer">
+  <div class="footer__inner">
+    
+      <div class="copyright">
+        <span>© 2025 Powered by <a href="https://gohugo.io">Hugo</a></span>
+    
+      <span>:: <a href="https://github.com/panr/hugo-theme-terminal" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+      </div>
+  </div>
+</footer>
+
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+
+
+
+  
+</div>
+
+</body>
+</html>
