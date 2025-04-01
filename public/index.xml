@@ -6,8 +6,50 @@
     <description>Recent content on Xenon</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 25 Mar 2025 15:19:30 -0400</lastBuildDate>
+    <lastBuildDate>Wed, 26 Mar 2025 12:53:14 -0400</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>1 2 Literals</title>
+      <link>http://localhost:1313/docs/1-3-literals/</link>
+      <pubDate>Wed, 26 Mar 2025 12:53:14 -0400</pubDate>
+      <guid>http://localhost:1313/docs/1-3-literals/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>1 2 Symbols</title>
+      <link>http://localhost:1313/docs/1-4-symbols/</link>
+      <pubDate>Wed, 26 Mar 2025 12:53:09 -0400</pubDate>
+      <guid>http://localhost:1313/docs/1-4-symbols/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>1 1 Comments</title>
+      <link>http://localhost:1313/docs/1-2-comments/</link>
+      <pubDate>Wed, 26 Mar 2025 12:52:54 -0400</pubDate>
+      <guid>http://localhost:1313/docs/1-2-comments/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>1 1 Identifiers</title>
+      <link>http://localhost:1313/docs/1-1-identifiers/</link>
+      <pubDate>Wed, 26 Mar 2025 12:52:43 -0400</pubDate>
+      <guid>http://localhost:1313/docs/1-1-identifiers/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Lexical Structure</title>
+      <link>http://localhost:1313/docs/1-0-lexical-structure/</link>
+      <pubDate>Wed, 26 Mar 2025 12:52:28 -0400</pubDate>
+      <guid>http://localhost:1313/docs/1-0-lexical-structure/</guid>
+      <description>&lt;h2 id=&#34;lexical-structure&#34;&gt;Lexical Structure&lt;/h2&gt;</description>
+    </item>
+    <item>
+      <title>Introduction</title>
+      <link>http://localhost:1313/docs/0-0-beginning/</link>
+      <pubDate>Wed, 26 Mar 2025 12:19:05 -0400</pubDate>
+      <guid>http://localhost:1313/docs/0-0-beginning/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;&#xA;&lt;p&gt;This book is the primary reference for the Xenon programming language. This book describes the lexical structure, syntax, and concepts of Xenon.&lt;/p&gt;&#xA;&lt;h2 id=&#34;what-this-book-is-not&#34;&gt;What this book is &lt;em&gt;not&lt;/em&gt;&lt;/h2&gt;&#xA;&lt;p&gt;This book is &lt;em&gt;not&lt;/em&gt;&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;A reference to the tools used with Xenon&lt;/li&gt;&#xA;&lt;li&gt;An introduction to the language&lt;/li&gt;&#xA;&lt;li&gt;A reference to the Xenon Standard Library&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+    </item>
     <item>
       <title>Site Update!</title>
       <link>http://localhost:1313/updates/2025/03-25-site-update/</link>

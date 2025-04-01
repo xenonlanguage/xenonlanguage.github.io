@@ -2,169 +2,219 @@
 title = 'Xenon Syntax'
 +++
 
-This page gives a writtin syntax of the xenon programming language in Antlr4 form. For a higher level view of the syntax, check out the [xenon-codegen](https://crates.io/crates/xenon-codegen) crate.
+This page gives a written syntax of the xenon programming language in Antlr4 form.
+
+Lexer Grammar
 
 ```antlr4
-grammar Xenon;
+lexer grammar Xenon;
 
-program:
- top_level_item*;
+DOCUMENTCOMMENT: '///' ~[\r\n]*;
+NAME: 'a-zA-Z_' 'a-zA-Z_0-9'*;
+NUMBER: '0-9'+ | ('0-9'+ '.' '0-9'+);
+STRING: '"' .* '"';
+CHAR: '\'' . '\'';
+ASKW: 'as';
+BREAKKW: 'break';
+CONSTKW: 'const';
+CONTINUEKW: 'continue';
+ELSEKW: 'else';
+EXTERNKW: 'extern';
+FALSEKW: 'false';
+TRUEKW: 'true';
+FNKW: 'fn';
+FORKW: 'for';
+FOREACHKW: 'foreach';
+IFKW: 'if';
+INKW: 'in';
+LETKW: 'let';
+LOOPKW: 'loop';
+SWITCHKW: 'switch';
+MODULEKW: 'module';
+PUBLICKW: 'public';
+PRIVATEKW: 'private';
+REFKW: 'ref';
+RETURNKW: 'return';
+SELFKW: 'self';
+STRUCTKW: 'struct';
+UNSAFEKW: 'unsafe';
+USEKW: 'use';
+WHILEKW: 'while';
+ASYNCKW: 'async';
+AWAITKW: 'await';
+DYNKW: 'dyn';
+ABSTRACTKW: 'abstract';
+OVERRIDEKW: 'override';
+VIRTUALKW: 'virtual';
+SAFEKW: 'safe';
+TRAITKW: 'trait';
+SEMICOLON: ';';
+COMMA: ',';
+DOT: '.';
+OPENPAREN: '(';
+CLOSEPAREN: ')';
+OPENBRACKET: '[';
+CLOSEBRACKET: ']';
+OPENBRACE: '{';
+CLOSEBRACE: '}';
+POUND: '#';
+QUESTION: '?';
+COLON: ':';
+EQUAL: '=';
+BANG: '!';
+LESSTHAN: '<';
+GREATERTHAN: '>';
+MINUS: '-';
+AND: '&';
+OR: '|';
+PLUS: '+';
+STAR: '*';
+SLASH: '/';
+PERCENT: '%';
+```
 
-name: ('a..z' | 'A..Z') ('a..z' | 'A..Z' | '0..9')*;
+Parser Grammar
 
-identifier: name ('.' name)?;
+```antlr4
+parser grammar Xenon;
 
-attribute: '#[' identifier ( '(' identifier ')' )? ']';
+program: programMember*;
+programMember:
+    functionDeclaration
+    | variableDeclaration
+    | structDeclaration
+    | traitDeclaration
+    | useDeclaration
+    | moduleDeclaration;
 
-visibility:
- 'public' | 'private';
+functionDeclaration: (PUBLICKW | PRIVATEKW)? (UNSAFEKW | SAFEKW)? EXTERNKW? OVERRIDEKW? VIRTUALKW? ASYNCKW? FNKW NAME OPENPAREN (parameter (COMMA parameter)*)? CLOSEPAREN (MINUS GREATERTHAN type)? (block | SEMICOLON);
+parameter: NAME COLON type;
+variableDeclaration: (PUBLICKW | PRIVATEKW)? (UNSAFEKW | SAFEKW)? CONSTKW? EXTERNKW? LETKW NAME (COLON type)? (EQUAL expression) SEMICOLON;
+structDeclaration: (PUBLICKW | PRIVATEKW)? ABSTRACTKW? STRUCTKW NAME (COLON path+) OPENBRACE (functionDeclaration | variableDeclaration)* CLOSEBRACE;
+traitDeclaration: (PUBLICKW | PRIVATEKW)? TRAITKW NAME (functionDeclaration | variableDeclaration)*;
+useDeclaration: USEKW path;
+moduleDeclaration: (PUBLICKW | PRIVATEKW)? MODULEKW NAME OPENBRACE moduleMember* CLOSEBRACE;
 
-top_level_item: attribute* (use_statement | module);
+path: NAME (COLON COLON path)?;
 
-module: attribute* visibility? 'module' '{' module_item '}';
+block: OPENBRACE statement* CLOSEBRACE;
 
-module_item:
- module
- | use_statement
- | function_declaration
- | struct_declaration
-    | impl_declaration
- | enum_declaration
- | trait_declaration;
+identifier: NAME (OPENPAREN (expression COMMA?)* CLOSEPAREN)? (DOT identifier)?;
 
-struct_declaration: visibility? 'struct' type '{' variable_definition* '}';
+statement:
+    variableAssignment
+    | variableDeclaration
+    | functionCall
+    | forLoop
+    | ifStatement
+    | loopStatement
+    | switchStatement
+    | unsafeBlock
+    | whileLoop
+    | returnStatement
+    | continueStatement
+    | breakStatement;
 
-impl_declaration: 'impl' (type 'for') type '{' function_declaration* '}';
+variableAssignment: identifier (PLUS | MINUS | STAR | SLASH | PERCENT)? EQUAL expression SEMICOLON;
 
-enum_declaration: visibility? 'enum' '{' variant* '}';
+forLoop: FORKW NAME INKW identifier statement;
 
-variant: identifier ('(' type ')')?;
+functionCall: identifier SEMICOLON;
 
-trait_declaration: visibility? 'trait' type '{' (variable_definition | function_declaration)* '}';
+ifStatement: IFKW expression statement (ELSEKW statement)?;
 
-type: identifier ('<' type '>')?;
+loopStatement: LOOPKW statement;
 
-use_statement: 'use' identifier ';';
+switchStatement: SWITCHKW expression OPENBRACE case* CLOSEBRACE;
 
-function_head: visibility? 'async'? identifier;
+case: CASEKW expression block;
 
-function_declaration: function_head '(' function_arguments? ')' function_type? statement;
+unsafeBlock: UNSAFEKW block;
 
-function_arguments: function_param (',' function_param)*;
+whileLoop: WHILEKW expression statement;
 
-function_param: identifier ':' type;
+returnStatement: RETURNKW (expression SEMICOLON)?;
 
-function_type: '->' type;
+continueStatement: CONTINUEKW;
 
-statement: 
-    attribute*
-    block
-    | variable_definition
-    | variable_assignment
-    | function_call
-    | if_statement
-    | while_statement
-    | loop_statement
-    | return_statement
-    | unsafe_block
-    | break_statement
-    | continue_statement
-    ;
+breakStatement: BREAKKW;
 
-block: '{' statement* '}';
+moduleMember:
+    variableDeclaration
+    | functionDeclaration
+    | moduleDeclaration
+    | structDeclaration
+    | traitDeclaration
+    | useDeclaration;
 
-variable_definition: visibility? 'let' identifier '=' expression ';';
+type:
+    pointerType
+    | referenceType
+    | functionRefType
+    | tupleType
+    | pathType
+    | primativeType;
 
-variable_assignment: identifier '+=' | '-=' | '*=' | '/=' | '=' expression ';';
+arrayType: type OPENBRACKET numberLiteral CLOSEBRACKET;
+pointerType: STAR type;
+referenceType: REFKW type;
+functionRefType: NAME OPENPAREN (type COMMA?)* CLOSEPAREN;
+tupleType: OPENPAREN (type COMMA?)* CLOSEPAREN;
+pathType: path;
+primativeType: I8KW
+               |I16KW
+               |I32KW
+               |I64KW
+               |U8KW
+               |U16KW
+               |U32KW
+               |U64KW
+               |F16KW
+               |F32KW
+               |F64KW
+               |BOOLKW
+               |CHARKW ;
 
-function_call: identifier '(' expression? (',' expression)* ')' ';';
-
-if_statement: 'if' expression statement ('else' statement)?;
-
-while_statement: 'while' expression statement;
-
-loop_statement: 'loop' statement;
-
-return_statement: 'return' expression? ';';
-
-unsafe_block: 'unsafe' block;
-
-break_statement: 'break' ';';
-
-continue_statement: 'continue' ';';
-
-expression: 
+expression:
     parentheses
+    | orExpr
+    | functionCall
+    | unaryOperation
     | literal
-    | unary_operation;
-
-parentheses: '(' expression ')';
-
-unary_operation: 
-    or_expr
-    |('+' | '-' | '!' | '&' | '*' expression);
-
-cast_expr:
-    unary_operation
-    | cast_expr 'as' type;
-
-mul_expr:
-    cast_expr
-    | mul_expr '*' cast_expr
-    | mul_expr '/' cast_expr
-    | mul_expr '%' cast_expr;
-
-add_expr:
-    mul_expr
-    | add_expr '+' mul_expr
-    | add_expr '-' mul_expr;
-
-shift_expr:
-    add_expr
-    | shift_expr '<<' add_expr
-    | shift_expr '>>' add_expr;
-
-bit_and_expr:
-    shift_expr
-    | bit_and_expr '&' shift_expr;
-
-bit_xor_expr:
-    bit_and_expr
-    | bit_xor_expr '^' bit_and_expr;
-
-bit_or_expr:
-    bit_xor_expr
-    | bit_or_expr '|' bit_xor_expr;
-
-cmp_expr:
-    bit_or_expr
-    | bit_or_expr ('==' | '!=' | '<' | '<=' | '>' | '>=') bit_or_expr;
-
-and_expr:
-    cmp_expr
-    | and_expr '&&' cmp_expr;
-
-or_expr:
-    and_expr
-    | or_expr '||' and_expr;
+    | identifier;
 
 literal:
-    boolean_literal
-    | integer_literal
-    | hex_literal
-    | binary_literal
-    | float_literal
-    | char_literal
-    | string_literal
-    | function_call_expr;
+    stringLiteral
+    | numberLiteral
+    | charLiteral
+    | booleanLiteral
+    | arrayLiteral
+    | tupleLiteral;
 
-boolean_literal: 'true' | 'false';
-integer_literal: '0..9'+;
-hex_literal: '0x' ('0..9' | 'a..f' | 'A..F')+;
-binary_literal: '0b' ('0' | '1')+;
-float_literal: '0..9'+ '.' '0..9'+;
-char_literal: '\'' '.' '\'';
-string_literal: '"' '.'* '"';
+stringLiteral: STRING;
+charLiteral: CHAR;
+numberLiteral: NUMBER;
+booleanLiteral: TRUEKW | FALSEKW;
 
-function_call_expr: identifier '(' expression? (',' expression)* ')';
+arrayLiteral: OPENBRACKET (expression COMMA?)* CLOSEBRACKET;
+tupleLiteral: OPENPAREN (expression COMMA?)* CLOSEPAREN;
+
+parentheses: OPENPAREN expression CLOSEPAREN;
+
+orExpr: andExpr (OR OR andExpr)*;
+andExpr: cmpExpr (AND AND cmpExpr)*;
+cmpExpr: bitOrExpr ((EQUAL EQUAL | BANG EQUAL | LESSTHAN | LESSTHAN EQUAL | GREATERTHAN | GREATERTHAN EQUAL) bitOrExpr)*;
+bitOrExpr: bitXorExpr (OR bitXorExpr)*;
+bitXorExpr: bitAndExpr (CARAT bitAndExpr)*;
+bitAndExpr: shiftExpr (AND shiftExpr)*;
+shiftExpr: addExpr ((LESSTHAN LESSTHAN | GREATERTHAN GREATERTHAN) addExpr)*;
+addExpr: mulExpr ((PLUS | MINUS) mulExpr)*;
+mulExpr: castExpr ((STAR | SLASH | PERCENT) castExpr)*;
+castExpr: unaryOperation (ASKW type)?;
+unaryOperation: (PLUS | MINUS | BANG | AND | STAR)? primary;
+primary:
+    literal
+    | identifier
+    | functionCall
+    | OPENPAREN expression CLOSEPAREN;
 ```

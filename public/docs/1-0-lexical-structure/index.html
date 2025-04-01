@@ -18,10 +18,10 @@
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1b1b1b" />
 
-    <meta name="description" content="How to Handle Compiler?">
+    <meta name="description" content="Lexical Structure">
 
     
-        <title>How to Handle Compiler? | Xenon</title>
+        <title>Lexical Structure | Xenon</title>
     
 
     
@@ -70,12 +70,10 @@
 
 <div id="single-header">
   <h1>
-    How to Handle Compiler?
+    Lexical Structure
   </h1>
   <div id="single-meta">
     
-    
-        <span class="datesub">Mar 24, 2025</span>
       
 
   </div>
@@ -85,9 +83,19 @@
 
 
 
-<main><p>I&rsquo;m still debating, but for now I think the compiler for Xenon will work using the <a href="https://llvm.org/"  target="_blank" rel="noreferrer nofollow">LLVM</a>
- IR. I don&rsquo;t think I want to write my own compiler for each target, and having a unified platform other languages use helps in bug fixes. Also, sorry for lack of updates over the weekend. I was working on another project.</p>
-</main>
+<main><h2 id="lexical-structure">Lexical Structure</h2>
+<p>The <strong>Lexical Structure</strong> of Xenon is the way the <a href="https://crates.io/crates/xenon-lexer"  target="_blank" rel="noreferrer nofollow"><em>lexer</em></a>
+ handles the code given to it. The <a href="https://crates.io/crates/xenon-lexer"  target="_blank" rel="noreferrer nofollow">lexer</a>
+ is the first step in the compilation process. It takes raw text and transforms it into a series of tokens.</p>
+<h3 id="tokens">Tokens</h3>
+<p>Tokens (as defined by the <a href="https://crates.io/crates/xenon-lexer"  target="_blank" rel="noreferrer nofollow">xenon-lexer</a>
+ crate) are a data structure consisting of a value, a type, and a line number.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Token</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pub</span> value: String,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pub</span> ttype: <span style="color:#a6e22e">TokenType</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pub</span> line: <span style="color:#66d9ef">usize</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></main>
 
 
 
@@ -253,27 +261,6 @@ window.store = {
         "url": "http:\/\/localhost:1313\/docs\/1-2-comments\/"
     },
     
-    "http:\/\/localhost:1313\/docs\/1-1-identifiers\/": {
-        "title": "1 1 Identifiers",
-        "tags": [],
-        "content": "", 
-        "url": "http:\/\/localhost:1313\/docs\/1-1-identifiers\/"
-    },
-    
-    "http:\/\/localhost:1313\/docs\/1-0-lexical-structure\/": {
-        "title": "Lexical Structure",
-        "tags": [],
-        "content": "Lexical Structure ", 
-        "url": "http:\/\/localhost:1313\/docs\/1-0-lexical-structure\/"
-    },
-    
-    "http:\/\/localhost:1313\/docs\/0-0-beginning\/": {
-        "title": "Introduction",
-        "tags": [],
-        "content": "Introduction This book is the primary reference for the Xenon programming language. This book describes the lexical structure, syntax, and concepts of Xenon.\nWhat this book is not This book is not\nA reference to the tools used with Xenon An introduction to the language A reference to the Xenon Standard Library ", 
-        "url": "http:\/\/localhost:1313\/docs\/0-0-beginning\/"
-    },
-    
     "http:\/\/localhost:1313\/updates\/2025\/03-25-site-update\/": {
         "title": "Site Update!",
         "tags": [],
@@ -349,6 +336,27 @@ window.store = {
         "tags": [],
         "content": "", 
         "url": "http:\/\/localhost:1313\/categories\/"
+    },
+    
+    "http:\/\/localhost:1313\/docs\/1-1-identifiers\/": {
+        "title": "Identifiers",
+        "tags": [],
+        "content": "Identifiers ", 
+        "url": "http:\/\/localhost:1313\/docs\/1-1-identifiers\/"
+    },
+    
+    "http:\/\/localhost:1313\/docs\/0-0-beginning\/": {
+        "title": "Introduction",
+        "tags": [],
+        "content": "Introduction This book is the primary reference for the Xenon programming language. This book describes the lexical structure, syntax, and concepts of Xenon.\nWhat this book is not This book is not\nA reference to the tools used with Xenon An introduction to the language A reference to the Xenon Standard Library ", 
+        "url": "http:\/\/localhost:1313\/docs\/0-0-beginning\/"
+    },
+    
+    "http:\/\/localhost:1313\/docs\/1-0-lexical-structure\/": {
+        "title": "Lexical Structure",
+        "tags": [],
+        "content": "Lexical Structure The Lexical Structure of Xenon is the way the lexer handles the code given to it. The lexer is the first step in the compilation process. It takes raw text and transforms it into a series of tokens.\nTokens Tokens (as defined by the xenon-lexer crate) are a data structure consisting of a value, a type, and a line number.\npub struct Token { pub value: String, pub ttype: TokenType, pub line: usize } ", 
+        "url": "http:\/\/localhost:1313\/docs\/1-0-lexical-structure\/"
     },
     
     "http:\/\/localhost:1313\/tags\/": {
